@@ -2,11 +2,10 @@ from flask import Blueprint
 from flask_restful import Api
 
 from .resource.upload import UploadPicture
-from .resource.page import GetIndex, GetRecycleBin, GetDetail, GetAllUpload, GetArticle
+from .resource.page import GetIndex, GetRecycleBin, GetDetail, GetArticle
 from .resource.file import Robots, Favicon, Picture
 from .resource.recycle import DeleteRecyclePicture, DeleteAllRecyclePicture, Recover
 from .resource.index import DeletePicture, Revolve
-from .resource.keep import CopyImage, DeleteKeep
 
 bp = Blueprint('api', __name__, url_prefix='')
 api = Api(bp, catch_all_404s=True)
