@@ -50,23 +50,6 @@ class GetDetail(Resource):
     def post(self):
         return self.get()
 
-
-class GetAllUpload(Resource):
-    """所有图片
-    """
-    def get(self):
-        pic_li = os.listdir('./static/img/keep/')
-        pic_li.sort(reverse=True)
-        a = datetime.datetime.now()
-        a = a + datetime.timedelta(0.5)
-        time_now = datetime.datetime.strftime(a, "%Y-%m-%d")
-        context = {'name': "xiaohua", 'li': pic_li, "time": time_now}
-        return make_response(render_template('keep.html', context=context))
-
-    def post(self):
-        return self.get()
-
-
 class GetArticle(Resource):
     """每日一文
     """

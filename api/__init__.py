@@ -17,7 +17,6 @@ api.add_resource(UploadPicture, '/api/upload_row', '/upload_row')
 # 获取页面
 api.add_resource(GetIndex, '/', '/index')
 api.add_resource(GetArticle, '/api/page', '/page')
-api.add_resource(GetAllUpload, '/api/keep', '/keep')
 api.add_resource(GetDetail, '/api/detail', '/detail')
 api.add_resource(GetRecycleBin, '/api/recycle ', '/recycle')
 
@@ -34,8 +33,4 @@ api.add_resource(DeletePicture, '/api/delete', '/delete')
 api.add_resource(Recover, '/api/add', '/add')
 api.add_resource(DeleteAllRecyclePicture, '/api/clear_all', '/clear_all')
 api.add_resource(DeleteRecyclePicture, '/api/delete_recycle', '/delete_recycle')
-
-# 保有图片恢复到主页
-api.add_resource(CopyImage, '/api/copy', '/copy')
-api.add_resource(DeleteKeep, '/api/delete_keep', '/delete_keep')
 

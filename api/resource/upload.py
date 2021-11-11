@@ -22,9 +22,7 @@ class UploadPicture(Resource):
             uid = now_date.strftime('%Y-%m-%d-%H-%M-%S')
             # 保存文件到服务器本地
             file = "./static/img/images/%s.jpg" % uid
-            file_keep = "./static/img/keep/%s.jpg" % uid
             fp.save(file)
-            shutil.copy(file, file_keep)
 
             with open(file, 'rb') as f:
                 if len(f.read()) < 100:
