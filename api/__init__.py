@@ -2,7 +2,7 @@ from flask import Blueprint
 from flask_restful import Api
 
 from .resource.upload import UploadPicture
-from .resource.page import GetIndex, GetRecycleBin, GetDetail, GetArticle
+from .resource.page import GetIndex, GetRecycleBin, GetDetail
 from .resource.file import Robots, Favicon, Picture
 from .resource.recycle import DeleteRecyclePicture, DeleteAllRecyclePicture, Recover
 from .resource.index import DeletePicture, Revolve
@@ -15,7 +15,6 @@ api.add_resource(UploadPicture, '/api/upload_row', '/upload_row')
 
 # 获取页面
 api.add_resource(GetIndex, '/', '/index')
-api.add_resource(GetArticle, '/api/page', '/page')
 api.add_resource(GetDetail, '/api/detail', '/detail')
 api.add_resource(GetRecycleBin, '/api/recycle ', '/recycle')
 

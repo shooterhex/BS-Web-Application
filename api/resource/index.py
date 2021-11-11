@@ -31,7 +31,7 @@ class DeletePicture(Resource):
         pic_name = request.form.get('name')
         pw = request.form.get('pw')
         if pic_name in imgs_li and pw == 'admin':
-            file_name = './static/img/recycle/%s' % pic_name
+            file_name = './static/img/images/%s' % pic_name
             os.remove(file_name)
             return "200"
         else:
