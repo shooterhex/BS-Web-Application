@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% block head %}
+        {% block metas %}
+            <meta charset="utf-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% endblock metas %}
+
+        <title>{% block title %}WebAnnotate - 在线图像标注任务部署{% endblock %}</title>
+        <link rel="icon" type="image/x-icon" href="/favicon.ico">
+        {% block styles %}
+          <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+          <link rel="stylesheet" href="../static/css/base.css">
+          <link rel="stylesheet" href="../static/open-iconic/font/css/open-iconic-bootstrap.css">
+        {% endblock styles %}
+        {% block scripts %}
+        {% endblock scripts %}
+    {% endblock head %}
+</head>
+<body>
+<header>
+  {% block header %}
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light shadow-sm">
+      {% block nav %}
+          <div class="container-fluid">
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <div class="me-auto">
+                  <a href="/" class="navbar-brand d-flex align-items-center" style="padding-left: 150px;">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor"
+                           stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="mr-2"
+                           viewBox="0 0 24 24" focusable="false">
+                          <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                          <circle cx="12" cy="13" r="4"/>
+                      </svg>
+                     <strong style="padding-left: 10px;">WebAnnotate</strong>
+                 </a>
+              </div>
+              {% if current_user.is_authenticated %}
+              <div class="navbar-nav ms-auto">
+                    <a class="nav-item nav-link" href="#" style="float: left;">
+                        <span class="oi oi-bell"></span>&nbsp;&nbsp;
+                    </a>
+                    <div class="dropdown nav-item" style="float: left; margin-right: 150px;">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button"
+                           aria-expanded="false">
+                            <img class="avatar-xs" src="/avatar">
+                            <span class="caret"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end" role="menu">
+                            <h6 class="dropdown-header">Logged in as {{ current_user.username }}</h6>
+                            <a class="dropdown-item" href="#">
+                                <span class="oi oi-person"></span> My Home
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">
+                                <span class="oi oi-cog"></span> Settings
+                            </a>
+{#                            {% if current_user.can('MODERATE') %}#}
+{#                                <a class="dropdown-item" href="#">#}
+{#                                    <span class="oi oi-dashboard"></span> Dashboard#}
+{#                                </a>#}
+{#                            {% endif %}#}
+                            <a class="dropdown-item" href="/logout">
+                                <span class="oi oi-power-standby"></span> Logout
+                            </a>
+                        </div>
+                    </div>
+              </div>
+              {% else %}
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+                    <a class="nav-link" href="/login">Login</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/signup" style="margin-right: 150px">Sign Up</a>
+                  </li>
+                </ul>
+            {% endif %}
+          </div>
+        </div>
+      {% endblock %}
+    </nav>
+  {% endblock %}
+</header>
+
+<main>
+    {% block content %}{% endblock %}
+</main>
+<footer style="text-align: center;">
+    {% block footer %}
+        <small> &copy; 2021 <a href="https://gitee.com/shooterhex" title="Written by Shooter Hex">Shooter Hex</a> /
+            <a href="https://gitee.com/shooterhex/android_app" title="Fork me on GitHub">GitHub</a>
+        </small>
+    {% endblock %}
+</footer>
+{% block foot_scripts %}
+    <script type="text/javascript" src="../static/js/jquery.min.js"></script>
+    <script type="text/javascript" src="../static/js/bootstrap.min.js"></script>
+{#          <script type="text/javascript" src="../static/js/popper.min.js"></script>#}
+{% endblock %}
+</body>
+</html>

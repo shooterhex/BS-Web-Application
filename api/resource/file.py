@@ -36,3 +36,15 @@ class Picture(Resource):
 
     def post(self):
         return self.get()
+
+class Avatar(Resource):
+    """主页图标
+    """
+    def get(self):
+        file_name = './static/img/avatar/avatar_small.png'
+        with open(file_name, 'rb') as f:
+            content = f.read()
+        return Response(content, mimetype="image/jpeg")
+
+    def post(self):
+        return self.get()

@@ -9,7 +9,7 @@ class GetIndex(Resource):
     """
 
     def get(self):
-        pic_li = os.listdir('./static/img/images/')
+        pic_li = os.listdir('./static/img/thumb/')
         pic_li.sort(reverse=True)
         a = datetime.datetime.now()
         a = a + datetime.timedelta(0)

@@ -15,14 +15,18 @@ class UploadPicture(Resource):
             文件对象保存在request.files上，并且通过前端的input标签的name属性来获取
             :return: 重定向到主页
             """
-        fp = request.files.get("f1")
+        photos = request.files.getlist("f1")
 
-        if fp is not None:
+        if not photos[0].filename:
+            print('No selected file.')
+            return redirect(url_for('multi_upload'))
+
+        for photo in photos:
             now_date = datetime.datetime.now()
-            uid = now_date.strftime('%Y-%m-%d-%H-%M-%S')
+            # uid = now_date.strftime('%Y-%m-%d-%H-%M-%S')
             # 保存文件到服务器本地
-            file = "./static/img/images/%s.jpg" % uid
-            fp.save(file)
+            file = "./static/img/images/" + photo.filename
+            photo.save(file)
 
             with open(file, 'rb') as f:
                 if len(f.read()) < 100:
@@ -37,7 +41,7 @@ class UploadPicture(Resource):
 
                     uid2 = now_date.strftime('%Y-%m-%d-%H-%M-%S')
                     # 保存文件到服务器本地
-                    file2 = "./static/img/images/%s.jpg" % uid2
+                    file2 = "./static/img/thumb/" + photo.filename
                     if len(out.mode) == 4:
                         r, g, b, a = out.split()
                         img = Image.merge("RGB", (r, g, b))

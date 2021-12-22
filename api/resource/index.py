@@ -3,6 +3,7 @@ import shutil
 from PIL import Image
 from flask import request
 from flask_restful import Resource
+from flask_login import current_user
 
 
 class DeletePicture(Resource):
@@ -27,13 +28,17 @@ class DeletePicture(Resource):
         删除图片的接口，将图片存到清空站
         :return: 200
         """
-        imgs_li = os.listdir('./static/img/images')
-        pic_name = request.form.get('name')
-        pw = request.form.get('pw')
-        if pic_name in imgs_li and pw == 'admin':
-            file_name = './static/img/images/%s' % pic_name
-            os.remove(file_name)
-            return "200"
+        imgs_li = os.listdir('./static/img/thumb')
+        if current_user.is_authenticated:
+            pic_name = request.form.get('name')
+            if pic_name in imgs_li:
+                file_name = './static/img/images/%s' % pic_name
+                thumb_name = './static/img/thumb/%s' % pic_name
+                os.remove(file_name)
+                os.remove(thumb_name)
+                return "200"
+            else:
+                return '401'
         else:
             return '401'
 
