@@ -28,12 +28,12 @@ class DeletePicture(Resource):
         删除图片的接口，将图片存到清空站
         :return: 200
         """
-        imgs_li = os.listdir('./static/img/thumb')
+        imgs_li = os.listdir('dist/static/img/thumb')
         if current_user.is_authenticated:
             pic_name = request.form.get('name')
             if pic_name in imgs_li:
-                file_name = './static/img/images/%s' % pic_name
-                thumb_name = './static/img/thumb/%s' % pic_name
+                file_name = 'dist/static/img/images/%s' % pic_name
+                thumb_name = 'dist/static/img/thumb/%s' % pic_name
                 os.remove(file_name)
                 os.remove(thumb_name)
                 return "200"
@@ -54,10 +54,10 @@ class Revolve(Resource):
         """
         pic_name = request.form.get('name')
         pw = request.form.get('pw')
-        imgs_li = os.listdir('./static/img/images')
+        imgs_li = os.listdir('dist/static/img/images')
         print(pic_name, imgs_li, pw, pic_name)
         if pic_name in imgs_li and pw == 'admin':
-            file_name = './static/img/images/%s' % pic_name
+            file_name = 'dist/static/img/images/%s' % pic_name
             img = Image.open(file_name)  # 打开图片
             img3 = img.transpose(Image.ROTATE_90)  # 旋转 90 度角。
             img3.save(file_name)

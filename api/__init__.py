@@ -6,6 +6,7 @@ from .resource.page import GetIndex, GetDetail
 from .resource.file import Robots, Favicon, Picture, Avatar
 from .resource.index import DeletePicture, Revolve
 from .resource.account import Login, Signup, Logout
+from .resource.annotate import Annotate
 
 bp = Blueprint('api', __name__, url_prefix='')
 api = Api(bp, catch_all_404s=True)
@@ -31,4 +32,7 @@ api.add_resource(DeletePicture, '/api/delete', '/delete')
 api.add_resource(Login, '/api/login', '/login')
 api.add_resource(Signup, '/api/signup', '/signup')
 api.add_resource(Logout, '/api/logout', '/logout')
+
+#标注界面
+api.add_resource(Annotate, '/api/annotate', '/annotate')
 

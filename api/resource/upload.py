@@ -25,7 +25,7 @@ class UploadPicture(Resource):
             now_date = datetime.datetime.now()
             # uid = now_date.strftime('%Y-%m-%d-%H-%M-%S')
             # 保存文件到服务器本地
-            file = "./static/img/images/" + photo.filename
+            file = "dist/static/img/images/" + photo.filename
             photo.save(file)
 
             with open(file, 'rb') as f:
@@ -41,7 +41,7 @@ class UploadPicture(Resource):
 
                     uid2 = now_date.strftime('%Y-%m-%d-%H-%M-%S')
                     # 保存文件到服务器本地
-                    file2 = "./static/img/thumb/" + photo.filename
+                    file2 = "dist/static/img/thumb/" + photo.filename
                     if len(out.mode) == 4:
                         r, g, b, a = out.split()
                         img = Image.merge("RGB", (r, g, b))
