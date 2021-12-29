@@ -29,12 +29,7 @@ class GetWorkspace(Resource):
             os.mkdir("./static/" + status.working_path + "/thumb")
 
         pic_li = os.listdir('./static/' + status.working_path + '/thumb/')
-
-        # pic_li.sort(reverse=True)
-        a = datetime.datetime.now()
-        a = a + datetime.timedelta(0)
-        time_now = datetime.datetime.strftime(a, "%Y-%m-%d")
-        context = {'name': "xiaohua", 'li': pic_li, "time": time_now}
+        context = {'li': pic_li}
 
         return make_response(render_template('workspace.html', context=context))
 

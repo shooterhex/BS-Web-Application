@@ -42,7 +42,7 @@
               </div>
               {% if current_user.is_authenticated %}
               <div class="navbar-nav ms-auto">
-                    <a class="nav-item nav-link" href="#" style="float: left;">
+                    <a class="nav-item nav-link" href="#" style="float: left;margin-top: 4px;">
                         <span class="oi oi-bell"></span>&nbsp;&nbsp;
                     </a>
                     <div class="dropdown nav-item" style="float: left; margin-right: 150px;">
@@ -91,7 +91,7 @@
 <main>
     {% block content %}{% endblock %}
 </main>
-<footer style="text-align: center;">
+<footer class="bg-light" style="text-align: center;">
     {% block footer %}
         <small> &copy; 2021 <a href="https://gitee.com/shooterhex" title="Written by Shooter Hex">Shooter Hex</a> /
             <a href="https://gitee.com/shooterhex/android_app" title="Fork me on GitHub">GitHub</a>

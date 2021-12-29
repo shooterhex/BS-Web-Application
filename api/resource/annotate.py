@@ -1,0 +1,18 @@
+import os
+
+from flask import render_template, make_response, request
+from flask_restful import Resource
+from api.resource import status
+
+class GetTask(Resource):
+    def get(self):
+        user_id = str(request.args.get('user'))
+        dataset_id = str(request.args.get('dataset'))
+        status.working_path = user_id + '/' + dataset_id
+        pic_li = os.listdir('./static/' + status.working_path + '/thumb/')
+        context = {'li': pic_li}
+
+        return make_response(render_template('task.html', context=context))
+
+    def post(self):
+        return self.get()

@@ -10,6 +10,28 @@
             return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
         }
 
+        function revolve_pic(diva) {
+            var pw=prompt("请输入口令", "");
+            if (pw!="" && pw != null) {
+                $.ajax({
+                        url : "/revolve",
+                        data :{'name' : diva,
+                                'pw' : pw},
+                        type : "POST",
+                        success : function(data){
+                                    if (data =="200"){
+                                        var boxObj = document.getElementById('img' + diva);
+                                        var uuid = guid(8,16);
+                                        boxObj.src = "/pic?"+ "&file=images" +"&name=" + diva + uuid;
+                                    }
+                                    else{
+                                        alert("对不起，您没有该权限");
+                                    }
+                              }
+                    })
+            }
+        }
+
         function delete_pic(diva) {
            $.ajax({
                 url : "/delete",
@@ -70,40 +92,6 @@
 
 {% block content %}
     <div class="album bg-light">
-        <div style="height: 75px;background-color: white;">
-            <form action="/upload_row" method="post" enctype="multipart/form-data">
-                <label for="">
-                    <button type="button" class="btn btn-outline-secondary" style="
-                        position: absolute;
-                        right: 485px;
-                        top: 80px;" onclick="upload.click()"
-                    >Upload
-                    <input type="file" id="upload" name="f1" style="
-                    display: none;" multiple>
-                    </button>
-                </label>
-                <button type="button" class="btn btn-outline-primary" style="
-                    position: absolute;
-                    right: 400px;
-                    top: 80px;" onclick="submit.click()"
-                >Submit
-                <input type="submit" id="submit" style="
-                display: none;">
-                </button>
-            </form>
-            <a role=button" class="btn btn-outline-success" style="
-                position: absolute;
-                right: 312px;
-                top: 80px;" href="javascript:name_dataset_js()"
-            >Release
-            </a>
-            <a role=button" class="btn btn-outline-danger" style="
-                position: absolute;
-                right: 175px;
-                top: 80px;" href="javascript:delete_dataset_js()"
-            >Delete Dataset
-            </a>
-        </div>
         <div class="container-lg" style="max-width: 1200px;min-height: 1000px;">
             <div class="row row-cols-6" id="father_div">
                 {% if context.li != [] %}
@@ -120,6 +108,10 @@
                                     </a>
                                     <!--                                <a href="/delete?name={{ i }}" style="float: left;color:#FFDAB9;" class="deletelink">-</a>-->
                                     <!--                            <a href="/revolve?name={{ i }}"  style="float: right;color:#FFDAB9;"-->
+                                    <a href="javascript:revolve_pic('{{i}}')" style="float: right;color:#FFDAB9;"
+                                    class="revolvelink">
+                                    <img id="revolve" src="{{ url_for('static', filename='public_img/revolve.png') }}">
+                                    </a>
                                 </div>
                             </div>
                         </a></div>
