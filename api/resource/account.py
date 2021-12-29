@@ -1,3 +1,5 @@
+import random
+
 from flask import make_response, render_template, redirect, url_for
 from flask_wtf import FlaskForm 
 from wtforms import StringField, PasswordField, BooleanField
@@ -6,7 +8,10 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin, login_user, login_required, logout_user
 from flask_restful import Resource
 from flask_sqlalchemy  import SQLAlchemy
-from flask_login import LoginManager
+from flask_login import LoginManager, current_user
+import os
+import json
+from api.resource import status
 
 db = SQLAlchemy()
 login_manager = LoginManager()
@@ -41,6 +46,7 @@ class Login(Resource):
             if user:
                 if check_password_hash(user.password, form.password.data):
                     login_user(user, remember=form.remember.data)
+                    status.isRemove = True
                     return redirect("/")
 
             return '<h1>Invalid username or password</h1>'
@@ -70,6 +76,28 @@ class Signup(Resource):
                 db.session.add(new_user)
                 db.session.commit()
 
+                avatar_index = random.randrange(10) + 1
+                if os.path.exists('./static/json/user_data.json'):
+                    with open("./static/json/user_data.json", 'r+') as json_fp:
+                        data = json.load(json_fp)
+                        data['user'].append({
+                            'id': new_user.id,
+                            'name': new_user.username,
+                            'avatar': avatar_index
+                        })
+                        json_fp.seek(0, 0)
+                        json.dump(data, json_fp)
+                else:
+                    data = {}
+                    data['user'] = []
+                    data['user'].append({
+                        'id': new_user.id,
+                        'name': new_user.username,
+                        'avatar': avatar_index
+                    })
+                    with open('./static/json/user_data.json', 'w') as json_fp:
+                        json.dump(data, json_fp)
+
                 return '<h1>New user has been created!</h1>'
             #return '<h1>' + form.username.data + ' ' + form.email.data + ' ' + form.password.data + '</h1>'
 
@@ -81,6 +109,10 @@ class Signup(Resource):
 class Logout(Resource):
     @login_required
     def get(self):
+        if status.isRemove:
+            uid = current_user.get_id()
+            os.removedirs('./static/' + str(uid) + '/images')
+            os.removedirs('./static/' + str(uid) + '/thumb')
         logout_user()
         return redirect('/')
 

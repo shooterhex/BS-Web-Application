@@ -1,6 +1,6 @@
 from flask_restful import Resource
 from flask import send_file, request, Response
-
+from flask_login import current_user
 
 class Robots(Resource):
     """爬虫爬取权限
@@ -27,9 +27,9 @@ class Picture(Resource):
     """
     def get(self):
         pic_name = request.args.get('name')
-        pic_name = pic_name[:23]
         file = request.args.get('file')
-        file_name = './static/img/%s/%s' % (file, pic_name)
+        uid = current_user.get_id()
+        file_name = './static/%s/%s/%s' % (uid, file, pic_name)
         with open(file_name, 'rb') as f:
             content = f.read()
         return Response(content, mimetype="image/jpeg")
@@ -41,7 +41,7 @@ class Avatar(Resource):
     """主页图标
     """
     def get(self):
-        file_name = './static/img/avatar/avatar_small.png'
+        file_name = './static/public_img/avatar/avatar_small.png'
         with open(file_name, 'rb') as f:
             content = f.read()
         return Response(content, mimetype="image/jpeg")

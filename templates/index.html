@@ -54,55 +54,23 @@
 {% block content %}
     <div class="album bg-light">
         <div style="height: 75px;background-color: white;">
-            <form action="/upload_row" method="post" enctype="multipart/form-data">
-                <label for="">
-                    <button type="button" class="btn btn-outline-secondary" style="
-                        position: absolute;
-                        right: 345px;
-                        top: 80px;" onclick="upload.click()"
-                    >Upload
-                    <input type="file" id="upload" name="f1" style="
-                    display: none;" multiple>
-                    </button>
-                </label>
-                <button type="button" class="btn btn-outline-primary" style="
-                    position: absolute;
-                    right: 260px;
-                    top: 80px;" onclick="submit.click()"
-                >Submit
-                <input type="submit" id="submit" style="
-                display: none;">
-                </button>
-            </form>
-            <button type="button" class="btn btn-outline-success" style="
+            <a role=button" class="btn btn-primary btn-lg" style="
                 position: absolute;
                 right: 175px;
-                top: 80px;"
+                top: 80px;" href="/workspace"
             >Release
-            </button>
+            </a>
         </div>
         <div class="container-lg" style="max-width: 1200px;">
-            <div class="row row-cols-6" id="father_div">
-                {% for i in context.li %}
-                    <div class="col" id="{{i}}">
-                    <a href="/detail?name={{i}}" class="detail_link">
+            <div class="row row-cols-4" id="father_div">
+                {% for i in range(8) %}
+                    <div class="col">
                         <div class="card mb-4 shadow-sm">
-                            <img class="card-img-top" id="img{{i}}" src="/pic?name={{ i }}&file=images">
+                            <img class="card-img-top" src="/cover">
                             <div class="card-body" style="height:34px;padding-top: 2px;">
-                                <!--                            <div class="card-text">-->
-                                <a href="javascript:delete_pic('{{i}}')" style="float: left;color:#FFDAB9;"
-                                class="deletelink">
-                                <img id="delete_icon" src="{{ url_for('static', filename='img/delete.png') }}">
-                                </a>
-                                <!--                                <a href="/delete?name={{ i }}" style="float: left;color:#FFDAB9;" class="deletelink">-</a>-->
-                                <!--                            <a href="/revolve?name={{ i }}"  style="float: right;color:#FFDAB9;"-->
-                                <a href="javascript:revolve_pic('{{i}}')" style="float: right;color:#FFDAB9;"
-                                class="revolvelink">
-                                <img id="delete_icon" src="{{ url_for('static', filename='img/revolve.png') }}">
-                                </a>
                             </div>
                         </div>
-                    </a></div>
+                    </div>
                 {% endfor %}
             </div>
         </div>

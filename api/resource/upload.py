@@ -1,10 +1,11 @@
 import os
+from os import path
 import shutil
 import datetime
 from PIL import Image
 from flask_restful import Resource
 from flask import redirect, request
-
+from flask_login import current_user
 
 class UploadPicture(Resource):
     """实体名称消歧联想"""
@@ -16,16 +17,22 @@ class UploadPicture(Resource):
             :return: 重定向到主页
             """
         photos = request.files.getlist("f1")
+        uid = current_user.get_id()
 
         if not photos[0].filename:
             print('No selected file.')
-            return redirect(url_for('multi_upload'))
+            return redirect("/")
 
         for photo in photos:
             now_date = datetime.datetime.now()
             # uid = now_date.strftime('%Y-%m-%d-%H-%M-%S')
             # 保存文件到服务器本地
-            file = "./static/img/images/" + photo.filename
+            if not path.exists('./static/' + str(uid)):
+                os.mkdir("./static/" + str(uid))
+                os.mkdir("./static/" + str(uid) + "/images/")
+                os.mkdir("./static/" + str(uid) + "/thumb/")
+
+            file = "./static/" + str(uid) + "/images/" + photo.filename
             photo.save(file)
 
             with open(file, 'rb') as f:
@@ -35,13 +42,13 @@ class UploadPicture(Resource):
                 else:
                     im = Image.open(file)
                     x, y = im.size
-                    y_s = int(y * 1200 / x)
+                    y_s = int(y * 174 / x)
 
-                    out = im.resize((1200, y_s), Image.ANTIALIAS)
+                    out = im.resize((174, y_s), Image.ANTIALIAS)
 
                     uid2 = now_date.strftime('%Y-%m-%d-%H-%M-%S')
                     # 保存文件到服务器本地
-                    file2 = "./static/img/thumb/" + photo.filename
+                    file2 = "./static/" + str(uid) + "/thumb/" + photo.filename
                     if len(out.mode) == 4:
                         r, g, b, a = out.split()
                         img = Image.merge("RGB", (r, g, b))
@@ -50,7 +57,7 @@ class UploadPicture(Resource):
                         out.save(file2)
         else:
             print('没有选择文件')
-        return redirect("/")
+        return redirect("/workspace")
 
     def post(self):
         return self.get()
