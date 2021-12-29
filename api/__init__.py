@@ -3,8 +3,9 @@ from flask_restful import Api
 
 from .resource.upload import UploadPicture
 from .resource.page import GetWorkspace, GetDetail
-from .resource.file import Robots, Favicon, Picture, Avatar
-from .resource.js_response import DeletePicture, Revolve, NameDataset
+from .resource.file import Robots, Favicon, Picture, LoginAvatar, GetAvatar
+from .resource.js_response import DeletePicture, Revolve, NameDataset,\
+                                    DeleteDataset
 from .resource.account import Login, Signup, Logout
 from .resource.homepage import GetIndex, CoverImage
 
@@ -21,7 +22,8 @@ api.add_resource(GetDetail, '/api/detail', '/detail')
 
 # 获取静态文件
 api.add_resource(Picture, '/api/pic', '/pic')
-api.add_resource(Avatar, '/api/avatar', '/avatar')
+api.add_resource(LoginAvatar, '/api/login_avatar', '/login_avatar')
+api.add_resource(GetAvatar, '/api/avatar', '/avatar')
 api.add_resource(Robots, '/api/robots.txt', '/robots.txt')
 api.add_resource(Favicon, '/api/favicon.ico', '/favicon.ico')
 
@@ -29,6 +31,7 @@ api.add_resource(Favicon, '/api/favicon.ico', '/favicon.ico')
 api.add_resource(Revolve, '/api/revolve', '/revolve')
 api.add_resource(DeletePicture, '/api/delete', '/delete')
 api.add_resource(NameDataset, '/api/name_dataset', '/name_dataset')
+api.add_resource(DeleteDataset, '/api/delete_dataset', '/delete_dataset')
 
 #注册、登入、登出
 api.add_resource(Login, '/api/login', '/login')

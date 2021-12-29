@@ -1,5 +1,6 @@
 from flask_restful import Resource
 from flask import Response, render_template, make_response, redirect
+import json
 
 class CoverImage(Resource):
     def get(self):
@@ -13,7 +14,10 @@ class CoverImage(Resource):
 
 class GetIndex(Resource):
     def get(self):
-        return make_response(render_template('index.html'))
+        with open("./static/json/user_data.json", 'r') as json_fp:
+            data = json.load(json_fp)
+
+        return make_response(render_template('index.html', data=data))
 
     def post(self):
         return self.get()

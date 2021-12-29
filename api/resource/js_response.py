@@ -7,6 +7,7 @@ from flask_restful import Resource
 from flask_login import current_user
 from api.resource import status
 import json
+import shutil
 
 class DeletePicture(Resource):
     # """删除图片，将图片存到回收站
@@ -31,13 +32,13 @@ class DeletePicture(Resource):
         :return: 200
         """
         uid = current_user.get_id()
-        imgs_li = os.listdir('./static/' + str(uid) + '/thumb')
+        imgs_li = os.listdir('./static/' + status.working_path + '/thumb')
 
         if current_user.is_authenticated:
             pic_name = request.form.get('name')
             if pic_name in imgs_li:
-                file_name = './static/' + str(uid) + '/images/%s' % pic_name
-                thumb_name = './static/' + str(uid) + '/thumb/%s' % pic_name
+                file_name = './static/' + status.working_path + '/images/%s' % pic_name
+                thumb_name = './static/' + status.working_path + '/thumb/%s' % pic_name
                 os.remove(file_name)
                 os.remove(thumb_name)
                 return "200"
@@ -59,10 +60,10 @@ class Revolve(Resource):
         pic_name = request.form.get('name')
         pw = request.form.get('pw')
         uid = current_user.get_id()
-        imgs_li = os.listdir('./static/' + str(uid) + '/images')
+        imgs_li = os.listdir('./static/' + status.working_path + '/images')
         print(pic_name, imgs_li, pw, pic_name)
         if pic_name in imgs_li and pw == 'admin':
-            file_name = './static/' + str(uid) + '/images/%s' % pic_name
+            file_name = './static/' + status.working_path + '/images/%s' % pic_name
             img = Image.open(file_name)  # 打开图片
             img3 = img.transpose(Image.ROTATE_90)  # 旋转 90 度角。
             img3.save(file_name)
@@ -117,8 +118,14 @@ class NameDataset(Resource):
             json_fp.seek(0, 0)
             json.dump(data, json_fp)
 
-        status.isRemove = False
+        return "200"
 
+    def post(self):
+        return self.get()
+
+class DeleteDataset(Resource):
+    def get(self):
+        shutil.rmtree('./static/' + status.working_path)
         return "200"
 
     def post(self):

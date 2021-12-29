@@ -46,7 +46,6 @@ class Login(Resource):
             if user:
                 if check_password_hash(user.password, form.password.data):
                     login_user(user, remember=form.remember.data)
-                    status.isRemove = True
                     return redirect("/")
 
             return '<h1>Invalid username or password</h1>'
@@ -109,10 +108,6 @@ class Signup(Resource):
 class Logout(Resource):
     @login_required
     def get(self):
-        if status.isRemove:
-            uid = current_user.get_id()
-            os.removedirs('./static/' + str(uid) + '/images')
-            os.removedirs('./static/' + str(uid) + '/thumb')
         logout_user()
         return redirect('/')
 
