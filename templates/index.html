@@ -67,10 +67,12 @@
                     {% if 'datasets' in user.keys() %}
                         {% for dataset in user['datasets'] %}
                             <div class="col">
-                                <div class="card mb-4 shadow-sm">
-                                    <img class="card-img-top" src="/cover">
+                                <div class="card mb-4 shadow-sm" >
+                                    <div style="overflow: hidden">
+                                        <img class="card-img-top zoom" src="/cover">
+                                    </div>
                                     <div class="card-body" style="height:150px;padding-top: 2px;">
-                                        <div>
+                                        <div style="margin-top: 5px">
                                             <img class="avatar-xs" src="/avatar?index={{ user.avatar }}">
                                             <span style="font-size: 12px; vertical-align: middle; color: #1890FF; margin-left: 5px">{{ user.name }}</span>
                                         </div>
@@ -83,10 +85,19 @@
                                                         background: #eaf5ff;
                                                         font-size: 12px;
                                                         width: fit-content;
-                                                        padding: 5px;">{{ dataset['dataset_tag'] }}</div>
+                                                        padding: 5px;
+                                                        margin-top: 10px">{{ dataset['dataset_tag'] }}</div>
                                         {% endif %}
-                                        <div>{{ dataset['dataset_fav'] }}</div>
-                                        <div>{{ dataset['dataset_ref'] }}</div>
+                                        <div style="margin-top: 5px">
+                                            <div style="display:inline;">
+                                            <span class="oi oi-star"></span>
+                                            <div style="display:inline;">{{ dataset['dataset_fav'] }}</div>
+                                            </div>
+                                            <div style="display:inline;">
+                                                <span class="oi oi-link-intact"></span>
+                                                <div style="display:inline;">{{ dataset['dataset_ref'] }}</div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
