@@ -56,7 +56,7 @@
         <div style="height: 75px;background-color: white;">
             <a role=button" class="btn btn-primary btn-lg" style="
                 position: absolute;
-                right: 175px;
+                right: 105px;
                 top: 75px;
                 border-radius: 30px" href="/workspace">
                 <span class="oi oi-plus"></span>&nbsp;&nbsp;Create Dataset
@@ -71,10 +71,10 @@
                                 <div class="card mb-4 shadow-sm" >
                                     <div style="overflow: hidden">
                                         <a href="/task?user={{ user.id }}&dataset={{ dataset['dataset_id'] }}">
-                                            <img class="card-img-top zoom" src="/cover">
+                                            <img class="card-img-top zoom" src="/cover?index={{ dataset['dataset_cover'] }}">
                                         </a>
                                     </div>
-                                    <div class="card-body" style="height:150px;padding-top: 2px;">
+                                    <div class="card-body" style="height:fit-content;padding-top: 2px;">
                                         <div style="margin-top: 5px">
                                             <img class="avatar-xs" src="/avatar?index={{ user.avatar }}">
                                             <span style="font-size: 12px; vertical-align: middle; color: #1890FF; margin-left: 5px">{{ user.name }}</span>

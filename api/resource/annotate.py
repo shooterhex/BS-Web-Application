@@ -16,3 +16,12 @@ class GetTask(Resource):
 
     def post(self):
         return self.get()
+
+class Annotate(Resource):
+    def get(self):
+        pic_name = request.args.get("name")
+        context = {'img_name': pic_name}
+        return make_response(render_template('annotate.html', context=context))
+
+    def post(self):
+        return self.get()

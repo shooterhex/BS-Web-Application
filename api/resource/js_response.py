@@ -59,8 +59,9 @@ class NameDataset(Resource):
         name = request.form.get('name')
         tag = request.form.get('tag')
         uid = int(current_user.get_id()) - 1
-        favorite_num = random.randrange(1, 5)
-        reference_num = random.randrange(2000)
+        favorite_num = random.randrange(6)
+        reference_num = random.randrange(2000) + 1
+        cover_img = random.randrange(12) + 1
 
         with open("./static/json/user_data.json", 'r+') as json_fp:
             data = json.load(json_fp)
@@ -68,12 +69,14 @@ class NameDataset(Resource):
                 if tag != '':
                     dataset = {'dataset_id': len(data['user'][uid]['datasets']) + 1,
                                'dataset_name': name,
+                               'dataset_cover': cover_img,
                                'dataset_tag': tag,
                                'dataset_fav': favorite_num,
                                'dataset_ref': reference_num}
                 else:
                     dataset = {'dataset_id': len(data['user'][uid]['datasets']) + 1,
                                'dataset_name': name,
+                               'dataset_cover': cover_img,
                                'dataset_fav': favorite_num,
                                'dataset_ref': reference_num}
             else:
@@ -81,12 +84,14 @@ class NameDataset(Resource):
                 if tag != '':
                     dataset = {'dataset_id': 1,
                                'dataset_name': name,
+                               'dataset_cover': cover_img,
                                'dataset_tag': tag,
                                'dataset_fav': favorite_num,
                                'dataset_ref': reference_num}
                 else:
                     dataset = {'dataset_id': 1,
                                'dataset_name': name,
+                               'dataset_cover': cover_img,
                                'dataset_fav': favorite_num,
                                'dataset_ref': reference_num}
 

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo</title>
+    <link rel="stylesheet" href="../static/css/jquery.contextMenu.min.css" >
+    <link rel="stylesheet" href="../static/css/jquery.image-label.css" >
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="text-center" style="margin-top: 25px;margin-bottom: 50px;">
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-outline-primary" id="btnCreate">新增</button>
+            <button type="button" class="btn btn-outline-primary" id="btnSave">保存</button>
+            <button type="button" class="btn btn-outline-primary" id="btnShow">隐藏标签</button>
+            <button type="button" class="btn btn-outline-primary" id="btnClear">清除所有标签</button>
+            <button type="button" class="btn btn-outline-primary" id="btnBack">返回上一步</button>
+        </div>
+    </div>
+    <img src="/pic?name={{ context.img_name }}&file=images" style="min-width: 256px;max-width: 1000px">
+
+    <script src="../static/js/jquery.min.js"></script>
+    <script src="../static/js/json2.min.js"></script>
+    <script src="../static/js/jquery.contextMenu.min.js"></script>
+    <script src="../static/js/jquery.image-label.js"></script>
+    <script>
+
+        //初始化
+        $('img').imageLabel();
+        //加载数据
+        var _arr = JSON.parse(localStorage.getItem('labelArr'));
+        $('img').imageLabel('loadData', {
+            data: _arr
+        });
+        //create
+        $('#btnCreate').click(function(){
+            $('img').imageLabel('create');
+            /*$('img').imageLabel('create', {
+                text: '勒布朗詹姆士'
+            });*/
+        });
+        //save
+        $('#btnSave').click(function(){
+            var data = $('img').imageLabel('getData');
+            localStorage.setItem('labelArr', JSON.stringify(data));
+        });
+        $('#btnClear').click(function(){
+            localStorage.clear();
+            location.reload();
+        });
+        $('#btnBack').click(function(){
+            history.back()
+        })
+        //toggle
+        $('#btnShow').click(function(){
+            var isShow = $(this).attr('_flag');
+            isShow = typeof(isShow)=='undefined'?1:isShow;
+            if (isShow && isShow==1){
+                $(this).text('展示标签');
+                $('img').imageLabel('hide');
+                $(this).attr('_flag', 0);
+            }else{
+                $(this).text('隐藏标签');
+                $('img').imageLabel('show');
+                $(this).attr('_flag', 1);
+            }
+        });
+
+        $.contextMenu({
+            selector: '.kbs-label-area',
+            callback: function(key, options) {
+                var e = window.event || arguments[0];
+                $('img').imageLabel('create', {
+                    top: $('.context-menu-list')[0].offsetTop || e.clientY,
+                    left: $('.context-menu-list')[0].offsetLeft || e.clientX
+                });
+            },
+            items: {
+                "create": {name: "新增标签"}
+            }
+        });
+    </script>
+</body>
+</html>

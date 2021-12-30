@@ -11,7 +11,7 @@ Sign Up
 {% endblock %}
 
 {% block content %}
-<div class="container">
+<div style="background-color:#eee;min-height: 1000px">
 
   <form class="form-signin" method="POST" action="/signup">
     <h2 class="form-signin-heading">Sign Up</h2>
@@ -31,4 +31,12 @@ Sign Up
   </form>
 
 </div> <!-- /container -->
+{% endblock %}
+
+{% block footer %}
+    <footer style="background-color:#eee;text-align: center;">
+        <small> &copy; 2021 <a href="https://gitee.com/shooterhex" title="Written by Shooter Hex">Shooter Hex</a> /
+            <a href="https://gitee.com/shooterhex/android_app" title="Fork me on GitHub">GitHub</a>
+        </small>
+    </footer>
 {% endblock %}

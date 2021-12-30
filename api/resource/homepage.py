@@ -1,10 +1,11 @@
 from flask_restful import Resource
-from flask import Response, render_template, make_response, redirect
+from flask import Response, render_template, make_response, request
 import json
 
 class CoverImage(Resource):
     def get(self):
-        file_name = './static/public_img/cover/cover.jpg'
+        cover_index = request.args.get('index')
+        file_name = './static/public_img/cover/c' + cover_index + '.jpg'
         with open(file_name, 'rb') as f:
             content = f.read()
         return Response(content, mimetype='image/jpeg')

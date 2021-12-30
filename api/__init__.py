@@ -7,7 +7,7 @@ from .resource.file import Robots, Favicon, Picture, LoginAvatar, GetAvatar
 from .resource.js_response import DeletePicture, NameDataset, DeleteDataset
 from .resource.account import Login, Signup, Logout
 from .resource.homepage import GetIndex, CoverImage
-from .resource.annotate import GetTask
+from .resource.annotate import GetTask, Annotate
 
 bp = Blueprint('api', __name__, url_prefix='')
 api = Api(bp, catch_all_404s=True)
@@ -39,3 +39,4 @@ api.add_resource(Signup, '/api/signup', '/signup')
 api.add_resource(Logout, '/api/logout', '/logout')
 
 api.add_resource(GetTask, '/api/task', '/task')
+api.add_resource(Annotate, '/api/annotate', '/annotate')

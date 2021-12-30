@@ -91,33 +91,38 @@
 {% endblock %}
 
 {% block content %}
-    <div class="album bg-light">
-        <div class="container-lg" style="max-width: 1200px;min-height: 1000px;">
+    <div class="album" style="background-color:#eee">
+        <div class="container-lg" style="max-width: 1200px;min-height: 1000px;padding-top: 75px;">
             <div class="row row-cols-6" id="father_div">
                 {% if context.li != [] %}
                     {% for i in context.li %}
                         <div class="col" id="{{i}}">
-                        <a href="/detail?name={{i}}" class="detail_link">
-                            <div class="card mb-4 shadow-sm">
-                                <img class="card-img-top" id="img{{i}}" src="/pic?name={{ i }}&file=thumb">
-                                <div class="card-body" style="height:34px;padding-top: 2px;">
-                                    <!--                            <div class="card-text">-->
-                                    <a href="javascript:delete_pic('{{i}}')" style="float: left;color:#FFDAB9;"
-                                    class="deletelink">
-                                    <img id="delete_icon" src="{{ url_for('static', filename='public_img/delete.png') }}">
-                                    </a>
-                                    <!--                                <a href="/delete?name={{ i }}" style="float: left;color:#FFDAB9;" class="deletelink">-</a>-->
-                                    <!--                            <a href="/revolve?name={{ i }}"  style="float: right;color:#FFDAB9;"-->
-                                    <a href="javascript:revolve_pic('{{i}}')" style="float: right;color:#FFDAB9;"
-                                    class="revolvelink">
-                                    <img id="revolve" src="{{ url_for('static', filename='public_img/revolve.png') }}">
-                                    </a>
+                            <a href="/detail?name={{i}}" class="detail_link">
+                                <div class="card mb-4 shadow-sm">
+                                    <img class="card-img-top" id="img{{i}}" src="/pic?name={{ i }}&file=thumb">
+                                    <div class="card-body" style="height:34px;padding-top: 2px;">
+                                        <!--                            <div class="card-text">-->
+                                        <a href="/annotate?name={{i}}" style="float: left;color:#FFDAB9;"
+                                        class="annotatelink">
+                                        <img id="annotate_icon" src="../static/public_img/annotate.png">
+                                        </a>
+                                        <!--                                <a href="/delete?name={{ i }}" style="float: left;color:#FFDAB9;" class="deletelink">-</a>-->
+                                        <!--                            <a href="/revolve?name={{ i }}"  style="float: right;color:#FFDAB9;"-->
+                                    </div>
                                 </div>
-                            </div>
-                        </a></div>
+                            </a>
+                        </div>
                     {% endfor %}
                 {% endif %}
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block footer %}
+    <footer style="background-color:#eee;text-align: center;">
+        <small> &copy; 2021 <a href="https://gitee.com/shooterhex" title="Written by Shooter Hex">Shooter Hex</a> /
+            <a href="https://gitee.com/shooterhex/android_app" title="Fork me on GitHub">GitHub</a>
+        </small>
+    </footer>
 {% endblock %}
