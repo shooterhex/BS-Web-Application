@@ -40,32 +40,34 @@ class UploadPicture(Resource):
             # uid = now_date.strftime('%Y-%m-%d-%H-%M-%S')
             # 保存文件到服务器本地
 
-            file = "./static/" + status.working_path + "/images/" + photo.filename
+            file = status.working_path + "/images/" + photo.filename
             photo.save(file)
-
-            with open(file, 'rb') as f:
-                if len(f.read()) < 100:
-                    os.remove(file)
-                    pass
-                else:
-                    im = Image.open(file)
-                    x, y = im.size
-                    y_s = int(y * 174 / x)
-
-                    out = im.resize((174, y_s), Image.ANTIALIAS)
-
-                    uid2 = now_date.strftime('%Y-%m-%d-%H-%M-%S')
-                    # 保存文件到服务器本地
-                    file2 = "./static/" + status.working_path + "/thumb/" + photo.filename
-                    if len(out.mode) == 4:
-                        r, g, b, a = out.split()
-                        img = Image.merge("RGB", (r, g, b))
-                        img.convert('RGB').save(file2, quality=10)
-                    else:
-                        out.save(file2)
+            self.save_thumb(file, photo.filename)
         else:
             print('没有选择文件')
         return redirect("/workspace")
 
     def post(self):
         return self.get()
+
+    @staticmethod
+    def save_thumb(file, name):
+        with open(file, 'rb') as f:
+            if len(f.read()) < 100:
+                os.remove(file)
+                pass
+            else:
+                im = Image.open(file)
+                x, y = im.size
+                y_s = int(y * 174 / x)
+
+                out = im.resize((174, y_s), Image.ANTIALIAS)
+
+                # 保存文件到服务器本地
+                file2 = status.working_path + "/thumb/" + name
+                if len(out.mode) == 4:
+                    r, g, b, a = out.split()
+                    img = Image.merge("RGB", (r, g, b))
+                    img.convert('RGB').save(file2, quality=10)
+                else:
+                    out.save(file2)

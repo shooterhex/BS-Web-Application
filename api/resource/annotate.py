@@ -8,8 +8,8 @@ class GetTask(Resource):
     def get(self):
         user_id = str(request.args.get('user'))
         dataset_id = str(request.args.get('dataset'))
-        status.working_path = user_id + '/' + dataset_id
-        pic_li = os.listdir('./static/' + status.working_path + '/thumb/')
+        status.working_path = './static/' + user_id + '/' + dataset_id
+        pic_li = os.listdir(status.working_path + '/thumb/')
         context = {'li': pic_li}
 
         return make_response(render_template('task.html', context=context))

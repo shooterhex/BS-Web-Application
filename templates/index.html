@@ -34,7 +34,7 @@
 
         function delete_pic(diva) {
            $.ajax({
-                url : "/delete",
+                url : "/delete_pic",
                 data :{'name' : diva},
                 type : "POST",
                 success : function(data){
@@ -54,13 +54,19 @@
 {% block content %}
     <div class="album bg-light">
         <div style="height: 75px;background-color: white;">
-            <a role=button" class="btn btn-primary btn-lg" style="
-                position: absolute;
-                right: 105px;
-                top: 75px;
-                border-radius: 30px" href="/workspace">
-                <span class="oi oi-plus"></span>&nbsp;&nbsp;Create Dataset
-            </a>
+            <div class="dropdown" style="
+                    position: absolute;
+                    right: 105px;
+                    top: 75px;">
+                <button type="button" class="btn btn-primary btn-lg" style="
+                    border-radius: 30px" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span class="oi oi-plus"></span>&nbsp;&nbsp;Create Dataset
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end" style="border-radius: 10px;">
+                    <li><a class="dropdown-item" href="/workspace">Image</a></li>
+                    <li><a class="dropdown-item" href="/workspace_video">Video</a></li>
+                </ul>
+            </div>
         </div>
         <div class="container-lg" style="max-width: 1200px;min-height: 1000px;">
             <div class="row row-cols-4" id="father_div">

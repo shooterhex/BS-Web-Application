@@ -32,13 +32,13 @@ class DeletePicture(Resource):
         :return: 200
         """
         uid = current_user.get_id()
-        imgs_li = os.listdir('./static/' + status.working_path + '/thumb')
+        imgs_li = os.listdir(status.working_path + '/thumb')
 
         if current_user.is_authenticated:
             pic_name = request.form.get('name')
             if pic_name in imgs_li:
-                file_name = './static/' + status.working_path + '/images/%s' % pic_name
-                thumb_name = './static/' + status.working_path + '/thumb/%s' % pic_name
+                file_name = status.working_path + '/images/%s' % pic_name
+                thumb_name = status.working_path + '/thumb/%s' % pic_name
                 os.remove(file_name)
                 os.remove(thumb_name)
                 return "200"
@@ -106,7 +106,7 @@ class NameDataset(Resource):
 
 class DeleteDataset(Resource):
     def get(self):
-        shutil.rmtree('./static/' + status.working_path)
+        shutil.rmtree(status.working_path)
         return "200"
 
     def post(self):
