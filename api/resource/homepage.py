@@ -2,6 +2,7 @@ from flask_restful import Resource
 from flask import Response, render_template, make_response, request
 import json
 
+
 class CoverImage(Resource):
     def get(self):
         cover_index = request.args.get('index')
@@ -12,6 +13,7 @@ class CoverImage(Resource):
 
     def post(self):
         return self.get()
+
 
 class GetIndex(Resource):
     def get(self):

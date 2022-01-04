@@ -1,50 +1,24 @@
 import os
-from os import path
-import shutil
-import datetime
 from PIL import Image
 from flask_restful import Resource
 from flask import redirect, request
-from flask_login import current_user
 from api.resource import status
 
-class UploadPicture(Resource):
-    """实体名称消歧联想"""
 
+class UploadPicture(Resource):
     def get(self):
-        """
-            上传图片，保存到服务器本地
-            文件对象保存在request.files上，并且通过前端的input标签的name属性来获取
-            :return: 重定向到主页
-            """
         photos = request.files.getlist("f1")
         if not photos[0].filename:
             print('No selected file.')
             return redirect("/")
 
-        # uid = str(current_user.get_id())
-
-        # if 'datasets' in data['user'][uid].keys():
-        #     dataset_id = len(data['user'][uid]['datasets']) + 1
-        #     os.mkdir("./static/" + uid + str(dataset_id))
-        #     os.mkdir("./static/" + uid + str(dataset_id) + "/images/")
-        #     os.mkdir("./static/" + uid + str(dataset_id) + "/thumb/")
-        # else:
-        #     os.mkdir("./static/" + uid)
-        #     os.mkdir("./static/" + uid + "/1")
-        #     os.mkdir("./static/" + uid + "/1/images/")
-        #     os.mkdir("./static/" + uid + "/1/thumb/")
-
         for photo in photos:
-            now_date = datetime.datetime.now()
-            # uid = now_date.strftime('%Y-%m-%d-%H-%M-%S')
-            # 保存文件到服务器本地
-
             file = status.working_path + "/images/" + photo.filename
             photo.save(file)
             self.save_thumb(file, photo.filename)
         else:
             print('没有选择文件')
+
         return redirect("/workspace")
 
     def post(self):

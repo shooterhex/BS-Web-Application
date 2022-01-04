@@ -6,6 +6,7 @@ import numpy as np
 from scipy.signal import argrelextrema
 from api.resource.upload import UploadPicture
 
+
 def smooth(x, window_len=13, window='hanning'):
     s = np.r_[2 * x[0] - x[window_len:1:-1],
               x, 2 * x[-1] - x[-1:-window_len:-1]]

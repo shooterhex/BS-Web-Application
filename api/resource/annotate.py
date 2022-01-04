@@ -4,6 +4,7 @@ from flask import render_template, make_response, request
 from flask_restful import Resource
 from api.resource import status
 
+
 class GetTask(Resource):
     def get(self):
         user_id = str(request.args.get('user'))
@@ -16,6 +17,7 @@ class GetTask(Resource):
 
     def post(self):
         return self.get()
+
 
 class Annotate(Resource):
     def get(self):

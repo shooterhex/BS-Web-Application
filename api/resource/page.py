@@ -1,6 +1,5 @@
 import os
 from os import path
-import datetime
 from flask_restful import Resource
 from flask import render_template, make_response, request
 from flask_login import current_user
@@ -8,8 +7,6 @@ import json
 from api.resource import status
 
 class GetWorkspace(Resource):
-    """主页
-    """
     def get(self):
         self.make_dataset_dir()
         pic_li = os.listdir(status.working_path + '/thumb/')
@@ -40,8 +37,6 @@ class GetWorkspace(Resource):
             os.mkdir(status.working_path + "/thumb")
 
 class GetDetail(Resource):
-    """详情页
-    """
     def get(self):
         pic_name = request.args.get("name")
         context = dict()

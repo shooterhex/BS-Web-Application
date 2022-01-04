@@ -1,27 +1,21 @@
 import traceback
-
 from flask_restful import Resource
-from flask import send_file, request, Response, \
-    send_from_directory, redirect, flash
+from flask import send_file, request, Response, redirect
 from flask_login import current_user
 from PIL import Image
 import PIL
 import json
 import simplejson
 from werkzeug.utils import secure_filename
-from api.resource import status
 from api.resource.frame_extract import frame_extract
 from api.resource import status
 import os
 
-ALLOWED_EXTENSIONS = set(['txt', 'gif', 'png', 'jpg', 'jpeg', 'bmp', 'rar', 'zip', '7zip', 'doc', 'docx', 'mp4'])
-IGNORED_FILES = set(['.gitignore'])
+ALLOWED_EXTENSIONS = {'txt', 'gif', 'png', 'jpg', 'jpeg', 'bmp', 'rar', 'zip', '7zip', 'doc', 'docx', 'mp4'}
+IGNORED_FILES = {'.gitignore'}
 
 
 class Robots(Resource):
-    """爬虫爬取权限
-    """
-
     def get(self):
         return send_file('./static/favicon/robots.txt')
 
@@ -30,9 +24,6 @@ class Robots(Resource):
 
 
 class Favicon(Resource):
-    """主页图标
-    """
-
     def get(self):
         return send_file('./static/favicon/favicon.ico')
 
@@ -41,9 +32,6 @@ class Favicon(Resource):
 
 
 class Picture(Resource):
-    """主页图标
-    """
-
     def get(self):
         pic_name = request.args.get('name')
         file = request.args.get('file')
@@ -57,9 +45,6 @@ class Picture(Resource):
 
 
 class LoginAvatar(Resource):
-    """主页图标
-    """
-
     def get(self):
         uid = int(current_user.get_id()) - 1
         with open("./static/json/user_data.json", 'r') as json_fp:
@@ -107,13 +92,13 @@ class uploadfile():
         return False
 
     def get_file(self):
-        if self.type != None:
+        if self.type is not None:
             # POST an image
             if self.is_refresh:
                 return {"refresh": self.not_allowed_msg,
-                         "name": self.name,
-                         "type": self.type,
-                         "size": self.size, }
+                        "name": self.name,
+                        "type": self.type,
+                        "size": self.size, }
             elif self.type.startswith('image'):
                 return {"name": self.name,
                         "type": self.type,
@@ -216,10 +201,6 @@ class UploadVideo(Resource):
                                                   filename)
                 files.save(uploaded_file_path)
 
-                # create thumbnail after saving
-                if mime_type.startswith('image'):
-                    create_thumbnail(filename)
-
                 # get file size after saving
                 size = os.path.getsize(uploaded_file_path)
 
@@ -227,7 +208,9 @@ class UploadVideo(Resource):
                 frame_extract(uploaded_file_path, status.working_path)
 
                 os.remove(uploaded_file_path)
-                result = uploadfile(name=filename, type=mime_type, size=size, not_allowed_msg='视频关键帧已提取，请重新刷新页面！', is_refresh=True)
+                result = uploadfile(name=filename, type=mime_type, size=size,
+                                    not_allowed_msg='视频关键帧已提取，请重新刷新页面！',
+                                    is_refresh=True)
 
             return {"files": [result.get_file()]}
 
@@ -240,10 +223,6 @@ def allowed_file(filename):
 
 
 def gen_file_name(filename):
-    """
-    If file was exist already, rename it and return a new name
-    """
-
     i = 1
     while os.path.exists(os.path.join(status.working_path, filename)):
         name, extension = os.path.splitext(filename)
@@ -254,7 +233,6 @@ def gen_file_name(filename):
 
 
 def create_thumbnail(image):
-    """ currently disabled """
     try:
         base_width = 80
         img = Image.open(os.path.join('data', image))

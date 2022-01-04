@@ -11,7 +11,6 @@ bootstrap = Bootstrap(app)
 app.config['BOOTSTRAP_SERVE_LOCAL'] = True
 
 if __name__ == '__main__':
-    # 生产状态可以把debug调成False
     db.init_app(app)
     login_manager.init_app(app)
     app.run(host='127.0.0.1', port=80, debug=True)

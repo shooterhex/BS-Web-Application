@@ -1,36 +1,15 @@
 import os
 import random
-import shutil
-from PIL import Image
-from flask import request, redirect
+from flask import request
 from flask_restful import Resource
 from flask_login import current_user
 from api.resource import status
 import json
 import shutil
 
-class DeletePicture(Resource):
-    # """删除图片，将图片存到回收站
-    # """
-    # def get(self):
-    #     imgs_li = os.listdir('./static/img/images')
-    #     pic_name = request.form.get('name')
-    #     pw = request.form.get('pw')
-    #     if pic_name in imgs_li and pw == 'admin':
-    #         file_name = './static/img/images/%s' % pic_name
-    #         file_name2 = './static/img/recycle/%s' % pic_name
-    #         shutil.move(file_name, file_name2)
-    #         return "200"
-    #     else:
-    #         return "401"
 
-    # def post(self):
-    #     return self.get()
+class DeletePicture(Resource):
     def get(self):
-        """
-        删除图片的接口，将图片存到清空站
-        :return: 200
-        """
         uid = current_user.get_id()
         imgs_li = os.listdir(status.working_path + '/thumb')
 
@@ -50,12 +29,9 @@ class DeletePicture(Resource):
     def post(self):
         return self.get()
 
+
 class NameDataset(Resource):
     def get(self):
-        """
-        旋转图片，将图片存到images文件夹里
-        :return: 200
-        """
         name = request.form.get('name')
         tag = request.form.get('tag')
         uid = int(current_user.get_id()) - 1
@@ -103,6 +79,7 @@ class NameDataset(Resource):
 
     def post(self):
         return self.get()
+
 
 class DeleteDataset(Resource):
     def get(self):

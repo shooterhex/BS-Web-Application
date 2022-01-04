@@ -13,7 +13,7 @@ function name_dataset_js() {
                                     window.location.replace('/');
                                 }
                                 else{
-                                    alert("对不起，您没有该权限");
+                                    alert("命名失败");
                                 }
                           }
                 })

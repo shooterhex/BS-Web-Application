@@ -9,9 +9,14 @@ itsdangerous==1.1.0
 Jinja2==2.11.2
 lxml==4.6.2
 MarkupSafe==1.1.1
-Pillow==8.1.0
+Pillow~=8.4.0
 pytz==2020.5
 requests==2.25.1
 six==1.15.0
 urllib3==1.26.2
 Werkzeug==1.0.1
+simplejson~=3.6.0
+WTForms~=3.0.0
+opencv-python~=4.5.5.62
+numpy~=1.21.5
+scipy~=1.7.3
